@@ -5,16 +5,17 @@ import subprocess
 import threading
 import time
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-from config import STREAM_URL
+from config import STREAM_URL,STREAM_URL2
 
 # === Import your own modules here if needed ===
 # from yolovision.streamer import start_flask_server
 from yolovision.detection import start_yolo_detection
+from yolovision2.detection import start_yolo_detection2
 from yolovision.state import shared_state
 
 # Mock for demo:
-shared_state = {"counter": 0, "logs": []}
-PROCESSED_STREAM_URL = "http://localhost:9000/processed"  # Adjust as per your streamer
+# shared_state = {"counter": 0, "logs": []}
+PROCESSED_STREAM_URL = "http://localhost:7000/processed"  # Adjust as per your streamer
 
 app = Flask(__name__)
 app.secret_key = "test1"
@@ -49,7 +50,7 @@ def save_user_info(name, password, link):
 def check_video_status():
     import cv2
     try:
-        cap = cv2.VideoCapture(STREAM_URL)
+        cap = cv2.VideoCapture(STREAM_URL2)
         if cap.isOpened():
             ret, _ = cap.read()
             cap.release()
@@ -61,6 +62,7 @@ def check_video_status():
 
 def update_stats():
     # In your real app, this will use shared_state from yolovision.state
+    print("yyooooooooo", shared_state["counter"])
     return str(shared_state["counter"]), "\n".join(shared_state["logs"][-10:])
 
 def start_backend_if_needed(link):
@@ -85,6 +87,31 @@ def start_backend_if_needed(link):
     if not flask_started:
         # threading.Thread(target=start_flask_server, daemon=True).start()
         threading.Thread(target=start_yolo_detection, daemon=True).start()
+        print("Would start Flask streamer and YOLO detection here")
+        flask_started = True
+
+def start_backend_if_needed2(link):
+    global stream_process, flask_started
+    # Example backend subprocess logic, adjust as per your real setup
+    if stream_process is None or stream_process.poll() is not None:
+        # If using a detection backend Python script, start here
+        stream_process = subprocess.Popen(
+            [sys.executable, "stream_handler2.py"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
+        )
+        # Log the process output
+        def log_stream_output(process):
+            for line in process.stdout:
+                print("[stream_handler]", line.decode().strip())
+            for line in process.stderr:
+                print("[stream_handler][ERR]", line.decode().strip())
+        threading.Thread(target=log_stream_output, args=(stream_process,), daemon=True).start()
+        # time.sleep(2)
+    if not flask_started:
+        # threading.Thread(target=start_flask_server, daemon=True).start()
+        threading.Thread(target=start_yolo_detection2, daemon=True).start()
         print("Would start Flask streamer and YOLO detection here")
         flask_started = True
 
@@ -115,7 +142,7 @@ def rtsp_input():
     if request.method == 'POST':
         name = "a"
         pwd = "a"
-        link = request.form.get('rtsp1')
+        link = request.form.get('rtsp2')
         if not link:
             return render_template('rtsp_input.html', error="❗ Fill all fields", saved=saved)
         save_user_info(name, pwd, link)
@@ -123,7 +150,7 @@ def rtsp_input():
         session['password'] = pwd
         session['link'] = link
         # Optionally start backend on submit
-        start_backend_if_needed(link)
+        start_backend_if_needed2(link)
         return redirect(url_for("video_viewer"))
     return render_template('rtsp_input.html', error=None, saved=saved)
 
@@ -133,8 +160,8 @@ def video_viewer():
         return redirect(url_for("login"))
     name = session.get('name')
     link = session.get('link')
-    return render_template("video_viewer.html", name=name, link=link,
-                           stream_url=STREAM_URL, processed_url=PROCESSED_STREAM_URL)
+    return render_template("video_viewer2.html", name=name, link=link,
+                           stream_url=STREAM_URL2, processed_url=PROCESSED_STREAM_URL)
 
 @app.route('/check_status')
 def check_status():

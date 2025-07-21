@@ -117,11 +117,11 @@ def start_yolo_detection():
                 obj["current_x"] = cx
                 print("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss", cx, prev_x)
                 # Update position
-                obj = tracked_objects[obj_id]
-                prev_x = obj["current_x"]
-                obj["current_x"] = cx
-                obj["prev_x"] = prev_x # testing new
-                obj["current_y"] = cy  # testing new
+                # obj = tracked_objects[obj_id]
+                # prev_x = obj["current_x"]
+                # obj["current_x"] = cx
+                # obj["prev_x"] = prev_x # testing new
+                # obj["current_y"] = cy  # testing new
                 
                 # # Check for crossing center line from RIGHT to LEFT
                 # if not obj["counted"]:

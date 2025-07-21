@@ -285,4 +285,5 @@ async def processed_feed() -> StreamingResponse:
     )
 
 if __name__ == "__main__":
+    print("I'm here")
     uvicorn.run(app, host="0.0.0.0", port=9000)

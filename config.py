@@ -4,7 +4,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # print(BASE_DIR,"sssssssssssss")
-MODEL_PATH = r"C:\Users\Administrator\Desktop\Github\Cotton Bales Detection System - FBR\Cotton-Bales-Detection-System\test1.pt"
+MODEL_PATH = r"C:\Users\Asim\Desktop\Github Ali\Cotton-Bales-Detection-System\test1.pt"
 STREAM_URL = "http://localhost:9000/video"  # <--- this line must exist
 STREAM_URL2 = "http://localhost:7000/video"  # <--- this line must exist
 FLASK_PORT = 7861

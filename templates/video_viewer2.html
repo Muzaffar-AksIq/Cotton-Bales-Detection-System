@@ -285,7 +285,7 @@
                 <div id="original-area">
                     {% if stream_url %}
                     <!-- For MJPEG snapshot or JPEG proxy, use <img src="{{ rtsp1 }}">. For RTSP, embed via backend if needed. -->
-                    <img src="http://localhost:9000/video" alt="Original Stream" />
+                    <img src="http://localhost:7000/video" alt="Original Stream" />
                     {% else %}
                     <div class="text-danger">No original stream available.</div>
                     {% endif %}
@@ -302,7 +302,7 @@
                 </div>
                 <div id="processed-area">
                     {% if processed_url %}
-                    <img src="http://localhost:9000/processed" alt="Processed Stream" />
+                    <img src="http://localhost:7000/processed" alt="Processed Stream" />
                     {% else %}
                     <div class="text-danger">No processed stream available.</div>
                     {% endif %}
