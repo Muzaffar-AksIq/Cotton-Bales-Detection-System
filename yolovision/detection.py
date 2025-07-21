@@ -67,7 +67,7 @@ def start_yolo_detection():
         return
 
     first_frame = True
-
+    cx_list = []
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
@@ -112,7 +112,10 @@ def start_yolo_detection():
                     }
                     # log_event(obj_id, f"NEW on {side} side at x={cx}")
                     # print(f"NEW Object {obj_id}: x={cx}, side={side}")
-                
+                obj = tracked_objects[obj_id]
+                prev_x = obj["current_x"]
+                obj["current_x"] = cx
+                print("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss", cx, prev_x)
                 # Update position
                 obj = tracked_objects[obj_id]
                 prev_x = obj["current_x"]
@@ -128,20 +131,36 @@ def start_yolo_detection():
                 #         obj["counted"] = True
                 #         log_event(obj_id, f"Bale Detected. Total: {shared_state['counter']}")
                 #         # print(f">>> COUNTED Object {obj_id}! Total: {shared_state['counter']}")
-                if not obj["counted"]:
-                    # Check if center line is between previous and current position
-                    if min(prev_x, cx) <= CENTER_LINE_X <= max(prev_x, cx):
-                        # Confirm direction is right to left
-                        # if prev_x > cx:  # Moving left
-                        shared_state["counter"] += 1
-                        obj["counted"] = True
-                        print(name)
-                        if name == "coveredbale":
-                            log_event(obj_id, f"Covered Bale Detected. Total: {shared_state['counter']}",
-                                    anomaly_detected=True, anomaly_type="Cotton Bale Wrap")
-                        else:
-                            log_event(obj_id, f"Bale Detected. Total: {shared_state['counter']}")
+                # if not obj["counted"]:
+                #     # Check if center line is between previous and current position
+                #     if min(prev_x, cx) <= CENTER_LINE_X <= max(prev_x, cx):
+                #         # Confirm direction is right to left
+                #         # if prev_x > cx:  # Moving left
+                #         shared_state["counter"] += 1
+                #         obj["counted"] = True
+                #         print(name)
+                #         if name == "coveredbale":
+                #             log_event(obj_id, f"Covered Bale Detected. Total: {shared_state['counter']}",
+                #                     anomaly_detected=True, anomaly_type="Cotton Bale Wrap")
+                #         else:
+                #             log_event(obj_id, f"Bale Detected. Total: {shared_state['counter']}")
                 
+                if not obj["counted"]:
+                    cx_list.append(cx)
+                    print(cx_list)
+                    if len(cx_list) == 5:
+                        print(cx_list)
+                        is_decreasing = all(x > y for x, y in zip(cx_list, cx_list[1:]))
+                        print("HEllo",is_decreasing)
+                        if is_decreasing:
+                            print("yes deacreasing")
+                            check_sum = cx_list[0] - cx_list[4]
+                            if check_sum > 50:
+                                print("all_set")
+                                shared_state["counter"] += 1
+                                obj["counted"] = True
+                                log_event(obj_id, f"Bale Detected. Total: {shared_state['counter']}")
+                        cx_list = [] 
                 
                 # Draw bounding box
                 if name == "coveredbale":
@@ -183,7 +202,8 @@ def start_yolo_detection():
                    cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3)
 
         shared_state["last_frame"] = frame
-        # time.sleep(0.01)
+        print(f"[detection] pushed frame #{shared_state['counter']} to shared_state")
+        time.sleep(0.01)
     
     cap.release()
     logger.info("YOLO detection thread ended")

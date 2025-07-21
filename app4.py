@@ -5,16 +5,16 @@ import subprocess
 import threading
 import time
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from config import STREAM_URL
 
 # === Import your own modules here if needed ===
 # from yolovision.streamer import start_flask_server
-# from yolovision.detection import start_yolo_detection
-# from yolovision.state import shared_state
+from yolovision.detection import start_yolo_detection
+from yolovision.state import shared_state
 
 # Mock for demo:
 shared_state = {"counter": 0, "logs": []}
-STREAM_URL = "http://your-rtsp-or-mjpeg-url"
-PROCESSED_STREAM_URL = "http://localhost:7861/processed"  # Adjust as per your streamer
+PROCESSED_STREAM_URL = "http://localhost:9000/processed"  # Adjust as per your streamer
 
 app = Flask(__name__)
 app.secret_key = "test1"
@@ -81,10 +81,10 @@ def start_backend_if_needed(link):
             for line in process.stderr:
                 print("[stream_handler][ERR]", line.decode().strip())
         threading.Thread(target=log_stream_output, args=(stream_process,), daemon=True).start()
-        time.sleep(2)
+        # time.sleep(2)
     if not flask_started:
         # threading.Thread(target=start_flask_server, daemon=True).start()
-        # threading.Thread(target=start_yolo_detection, daemon=True).start()
+        threading.Thread(target=start_yolo_detection, daemon=True).start()
         print("Would start Flask streamer and YOLO detection here")
         flask_started = True
 

@@ -82,3 +82,5 @@ Timestamp,CameraID,CameraName,ObjectID,EventType,LineCount,PosX,PosY,Counted,Ano
 2025-07-18 06:44:31,101,Camera 1,38,Covered Bale Detected. Total: 6,6,602,367,True,true,Cotton Bale Wrap
 2025-07-18 07:05:37,101,Camera 1,2,Covered Bale Detected. Total: 1,1,499,338,True,true,Cotton Bale Wrap
 2025-07-18 07:30:17,101,Camera 1,13,Covered Bale Detected. Total: 1,1,608,367,True,true,Cotton Bale Wrap
+2025-07-21 15:34:19,101,Camera 1,1,Bale Detected. Total: 1,1,905,323,True,false,
+2025-07-21 15:38:48,101,Camera 1,2,Bale Detected. Total: 1,1,178,262,True,false,

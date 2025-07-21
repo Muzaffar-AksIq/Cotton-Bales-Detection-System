@@ -29,8 +29,9 @@ def processed():
 
 def start_flask_server():
     def run():
+        print("we are here")
         logger.info("Flask MJPEG server running at http://localhost:7861/processed")
         app.run(host="0.0.0.0", port=7861, threaded=True)
-
+        print("started")
     t = threading.Thread(target=run, daemon=True)
     t.start()

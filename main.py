@@ -29,7 +29,7 @@ def kill_process_on_port(port):
         print(f"Error checking port {port}: {e}")
 
 if __name__ == "__main__":
-    ports = [9000,7862,7863,7860,7000,7861,7864]
+    ports = [9000,7862,7863,7860,7000,7861,7864,9000]
     for port in ports:
         kill_process_on_port(port)
 
@@ -37,20 +37,20 @@ if __name__ == "__main__":
 
     # Launch app.py
     try:
-        subprocess.Popen([python_executable, "app4.py"])
+        # subprocess.Popen([python_executable, "app4.py"])
         print("Started app.py")
     except Exception as e:
         print(f"Failed to start app.py: {e}")
 
     # Launch app2.py
     try:
-        subprocess.Popen([python_executable, "app2.py"])
+        # subprocess.Popen([python_executable, "app2.py"])
         print("Started app2.py")
     except Exception as e:
         print(f"Failed to start app2.py: {e}")
 
     try:
-        subprocess.Popen([python_executable, "app3.py"])
+        # subprocess.Popen([python_executable, "app3.py"])
         print("Started app3.py")
     except Exception as e:
         print(f"Failed to start api_server.py: {e}")
