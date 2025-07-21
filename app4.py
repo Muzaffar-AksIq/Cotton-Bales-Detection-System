@@ -6,6 +6,7 @@ import threading
 import time
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 
+
 # === Import your own modules here if needed ===
 # from yolovision.streamer import start_flask_server
 # from yolovision.detection import start_yolo_detection
@@ -21,7 +22,7 @@ app.secret_key = "test1"
 
 USER_INFO_FILE = "user_info.json"
 VALID_USERNAME = "0"
-VALID_PASSWORD = "0"
+VALID_PASSWORD = "00"
 
 # Globals for backend process (as per your Gradio logic)
 stream_process = None
