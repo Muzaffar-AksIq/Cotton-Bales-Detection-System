@@ -131,7 +131,7 @@ The RTSP URLs and user credentials are persisted in `user_info.json` via the UI.
     ├── state.py
     ├── utils.py
     └── detection.py
-
+```
 
 ## How It Works
 
