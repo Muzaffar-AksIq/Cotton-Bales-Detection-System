@@ -168,13 +168,13 @@ from typing import AsyncGenerator, Optional, Union
 
 import uvicorn
 
-from yolovision.state import shared_state
-from yolovision.detection import start_yolo_detection
+from yolovision2.state import shared_state2
+from yolovision2.detection import start_yolo_detection2
 
 # — Load the RTSP link & user info —
 with open("user_info.json", "r") as f:
     cfg = json.load(f)
-STREAM_LINK = cfg["link"]
+STREAM_LINK = cfg["link2"]
 
 # — Instantiate camera once for both endpoints —
 class Camera:
@@ -202,7 +202,7 @@ camera = Camera(STREAM_LINK)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Kick off your detection loop in a daemon thread
-    threading.Thread(target=start_yolo_detection, daemon=True).start()
+    threading.Thread(target=start_yolo_detection2, daemon=True).start()
     yield
     camera.release()
 
@@ -235,7 +235,7 @@ async def video_feed() -> StreamingResponse:
 async def processed_feed() -> StreamingResponse:
     def gen_proc():
         while True:
-            frame = shared_state.get("last_frame")
+            frame = shared_state2.get("last_frame")
             if frame is None:
                 # blank fallback until detection writes something
                 blank = 255 * np.ones((480,640,3), np.uint8)
@@ -254,5 +254,5 @@ async def processed_feed() -> StreamingResponse:
     )
 
 if __name__ == "__main__":
-    print("I'm here")
+    print("I'm here2")
     uvicorn.run(app, host="0.0.0.0", port=7000)

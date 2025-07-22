@@ -186,3 +186,5 @@ Timestamp,CameraID,CameraName,ObjectID,EventType,LineCount,PosX,PosY,Counted,Ano
 2025-07-21 18:23:41,101,Camera 1,28,Bale Detected. Total: 10,10,NA,508,True,false,
 2025-07-21 18:26:18,101,Camera 1,1,Bale Detected. Total: 1,1,NA,514,True,false,
 2025-07-21 18:26:36,101,Camera 1,3,Bale Detected. Total: 2,2,NA,462,True,false,
+2025-07-22 11:39:50,101,Camera 1,1,Bale Detected. Total: 1,1,272,241,True,false,
+2025-07-22 11:51:51,101,Camera 1,1,Bale Detected. Total: 1,1,431,281,True,false,

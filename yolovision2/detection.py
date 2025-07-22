@@ -54,7 +54,7 @@ def log_event(object_id, event_type, anomaly_detected=False, anomaly_type=None):
 def start_yolo_detection2():
     global CENTER_LINE_X
     logger.info("Starting YOLO detection thread")
-    model = YOLO(MODEL_PATH)
+    model = YOLO(MODEL_PATH_CAM2)
 
     if not wait_for_stream(STREAM_URL2):
         logger.error("Stream not available after waiting. Exiting YOLO thread.")
@@ -213,7 +213,7 @@ def start_yolo_detection2():
                    cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3)
 
         shared_state2["last_frame"] = frame
-        # time.sleep(0.01)
+        time.sleep(0.01)
     
     cap.release()
     logger.info("YOLO detection thread ended")

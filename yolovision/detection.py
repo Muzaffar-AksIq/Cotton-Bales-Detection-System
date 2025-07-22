@@ -55,7 +55,7 @@ def log_event(object_id, event_type, anomaly_detected=False, anomaly_type=None):
 def start_yolo_detection():
     global CENTER_LINE_X
     logger.info("Starting YOLO detection thread")
-    model = YOLO(MODEL_PATH)
+    model = YOLO(MODEL_PATH_CAM1)
 
     if not wait_for_stream(STREAM_URL):
         logger.error("Stream not available after waiting. Exiting YOLO thread.")

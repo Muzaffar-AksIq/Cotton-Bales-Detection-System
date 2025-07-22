@@ -37,20 +37,20 @@ if __name__ == "__main__":
 
     # Launch app.py
     try:
-        subprocess.Popen([python_executable, "app4.py"])
+        # subprocess.Popen([python_executable, "app4.py"])
         print("Started app4.py")
     except Exception as e:
         print(f"Failed to start app.py: {e}")
 
     # Launch app2.py
     try:
-        subprocess.Popen([python_executable, "app2.py"])
+        # subprocess.Popen([python_executable, "app2.py"])
         print("Started app2.py")
     except Exception as e:
         print(f"Failed to start app2.py: {e}")
 
     try:
-        subprocess.Popen([python_executable, "app3.py"])
+        # subprocess.Popen([python_executable, "app3.py"])
         print("Started app3.py")
     except Exception as e:
         print(f"Failed to start api_server.py: {e}")

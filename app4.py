@@ -15,8 +15,8 @@ from yolovision.state import shared_state
 
 # Mock for demo:
 # shared_state = {"counter": 0, "logs": []}
-PROCESSED_STREAM_URL = "http://localhost:7000/processed"  # Adjust as per your streamer
-PROCESSED_STREAM_URL2 = "http://localhost:9000/processed"
+PROCESSED_STREAM_URL = "http://localhost:9000/processed"  # Adjust as per your streamer
+PROCESSED_STREAM_URL2 = "http://localhost:7000/processed"
 app = Flask(__name__)
 app.secret_key = "test1"
 
@@ -27,6 +27,9 @@ VALID_PASSWORD = "0"
 # Globals for backend process (as per your Gradio logic)
 stream_process = None
 flask_started = False
+
+stream_process2 = None
+flask_started2 = None
 
 # --- Helper Functions ---
 def load_saved_user_info():
@@ -94,11 +97,13 @@ def start_backend_if_needed(link):
         flask_started = True
 
 def start_backend_if_needed2(link):
-    global stream_process, flask_started
+    print("i'm in backend")
+    global stream_process2, flask_started2
     # Example backend subprocess logic, adjust as per your real setup
-    if stream_process is None or stream_process.poll() is not None:
+    if stream_process2 is None or stream_process2.poll() is not None:
         # If using a detection backend Python script, start here
-        stream_process = subprocess.Popen(
+        print("starting stream handler 2")
+        stream_process2 = subprocess.Popen(
             [sys.executable, "stream_handler2.py"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -107,16 +112,16 @@ def start_backend_if_needed2(link):
         # Log the process output
         def log_stream_output(process):
             for line in process.stdout:
-                print("[stream_handler]", line.decode().strip())
+                print("[stream_handler2]", line.decode().strip())
             for line in process.stderr:
-                print("[stream_handler][ERR]", line.decode().strip())
-        threading.Thread(target=log_stream_output, args=(stream_process,), daemon=True).start()
+                print("[stream_handler2][ERR]", line.decode().strip())
+        threading.Thread(target=log_stream_output, args=(stream_process2,), daemon=True).start()
         # time.sleep(2)
-    if not flask_started:
+    if not flask_started2:
         # threading.Thread(target=start_flask_server, daemon=True).start()
         threading.Thread(target=start_yolo_detection2, daemon=True).start()
         print("Would start Flask streamer and YOLO detection here")
-        flask_started = True
+        flask_started2 = True
 
 # --- Flask Routes ---
 

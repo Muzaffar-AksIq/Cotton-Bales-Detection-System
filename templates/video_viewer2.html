@@ -286,8 +286,8 @@
                     </select>
                 </div>
                 <div id="original1-area">
-                    {% if stream_url %}
-                    <img src="http://localhost:7000/video" alt="Original Stream 1" />
+                    {% if stream_url1 %}
+                    <img src="http://localhost:9000/video" alt="Original Stream 1" />
                     {% else %}
                     <div class="text-danger">No original stream available.</div>
                     {% endif %}
@@ -303,7 +303,7 @@
                 </div>
                 <div id="processed1-area">
                     {% if processed_url %}
-                    <img src="http://localhost:7000/processed" alt="Processed Stream 1" />
+                    <img src="http://localhost:9000/processed" alt="Processed Stream 1" />
                     {% else %}
                     <div class="text-danger">No processed stream available.</div>
                     {% endif %}
@@ -342,7 +342,7 @@
                 </div>
                 <div id="original2-area">
                     {% if stream_url2 %}
-                    <img src="http://localhost:7000/video2" alt="Original Stream 2" />
+                    <img src="http://localhost:7000/video" alt="Original Stream 2" />
                     {% else %}
                     <div class="text-danger">No original stream available.</div>
                     {% endif %}
@@ -358,7 +358,7 @@
                 </div>
                 <div id="processed2-area">
                     {% if processed_url2 %}
-                    <img src="http://localhost:7000/processed2" alt="Processed Stream 2" />
+                    <img src="http://localhost:7000/processed" alt="Processed Stream 2" />
                     {% else %}
                     <div class="text-danger">No processed stream available.</div>
                     {% endif %}
