@@ -42,7 +42,7 @@ A multi‑camera, real‑time cotton‑bale counting application with YOLO‑bas
    ```bash
    git clone <repo-url>
    cd <repo-directory>
-````
+   ```
 
 2. Create and activate a virtual environment:
 
