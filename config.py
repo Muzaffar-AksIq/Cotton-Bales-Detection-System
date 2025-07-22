@@ -3,7 +3,6 @@ import os
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# print(BASE_DIR,"sssssssssssss")
 MODEL_PATH_CAM1 = r"model\Cam1Model.pt"
 MODEL_PATH_CAM2 = r"model\Cam1Model.pt"
 STREAM_URL = "http://localhost:9000/video"  # <--- this line must exist

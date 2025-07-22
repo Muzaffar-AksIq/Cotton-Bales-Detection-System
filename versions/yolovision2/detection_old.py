@@ -3,7 +3,7 @@ import time
 import numpy as np
 from datetime import datetime
 from ultralytics import YOLO
-from .state import shared_state
+from ...yolovision2.state import shared_state
 from logger import logger
 from config import *
 

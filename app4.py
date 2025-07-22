@@ -8,13 +8,10 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 from config import STREAM_URL,STREAM_URL2
 
 # === Import your own modules here if needed ===
-# from yolovision.streamer import start_flask_server
 from yolovision.detection import start_yolo_detection
 from yolovision2.detection import start_yolo_detection2
 from yolovision.state import shared_state
 
-# Mock for demo:
-# shared_state = {"counter": 0, "logs": []}
 PROCESSED_STREAM_URL = "http://localhost:9000/processed"  # Adjust as per your streamer
 PROCESSED_STREAM_URL2 = "http://localhost:7000/processed"
 app = Flask(__name__)
@@ -166,8 +163,6 @@ def rtsp_input():
             start_backend_if_needed(link1)
             start_backend_if_needed2(link2)
             return redirect(url_for("video_viewer2"))
-            # start_backend_if_needed2(link2)
-            # return redirect(url_for("video_viewer2"))
         save_user_info(name, pwd, link1)
         session['name'] = name
         session['password'] = pwd
