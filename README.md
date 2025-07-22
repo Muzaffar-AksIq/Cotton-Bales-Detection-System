@@ -1,11 +1,8 @@
-Sure! Here's the complete markdown code for your **Cotton Bale Detection System** documentation:
 
-````markdown
 # Cotton Bale Detection System
 
 A multi‑camera, real‑time cotton‑bale counting application with YOLO‑based detection, streaming servers, and a dashboard for monitoring and analytics.
 
----
 
 ## Table of Contents
 
