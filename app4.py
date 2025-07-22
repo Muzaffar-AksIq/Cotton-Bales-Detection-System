@@ -16,7 +16,7 @@ from yolovision.state import shared_state
 # Mock for demo:
 # shared_state = {"counter": 0, "logs": []}
 PROCESSED_STREAM_URL = "http://localhost:7000/processed"  # Adjust as per your streamer
-
+PROCESSED_STREAM_URL2 = "http://localhost:9000/processed"
 app = Flask(__name__)
 app.secret_key = "test1"
 
@@ -38,11 +38,14 @@ def load_saved_user_info():
             return {}
     return {}
 
-def save_user_info(name, password, link):
+def save_user_info(name, password, link1,name2=None, password2=None, link2=None):
     data = {
         "name": name,
         "password": password,
-        "link": link
+        "link": link1,
+        "name2": name2,
+        "password2": password2,
+        "link2": link2
     }
     with open(USER_INFO_FILE, "w") as f:
         json.dump(data, f)
@@ -142,15 +145,29 @@ def rtsp_input():
     if request.method == 'POST':
         name = "a"
         pwd = "a"
-        link = request.form.get('rtsp2')
-        if not link:
+        link1 = request.form.get('rtsp1')
+        name2 = "a"
+        pwd2 = "a"
+        link2 = request.form.get('rtsp2')
+        if not link1:
             return render_template('rtsp_input.html', error="❗ Fill all fields", saved=saved)
-        save_user_info(name, pwd, link)
+        # Optionally start backend on submit
+        if link2:
+            print("yes")
+            save_user_info(name, pwd, link1,name2, pwd2, link2)
+            session['name'] = name
+            session['password'] = pwd
+            session['link'] = link1
+            start_backend_if_needed(link1)
+            start_backend_if_needed2(link2)
+            return redirect(url_for("video_viewer2"))
+            # start_backend_if_needed2(link2)
+            # return redirect(url_for("video_viewer2"))
+        save_user_info(name, pwd, link1)
         session['name'] = name
         session['password'] = pwd
-        session['link'] = link
-        # Optionally start backend on submit
-        start_backend_if_needed2(link)
+        session['link'] = link1
+        start_backend_if_needed(link1)
         return redirect(url_for("video_viewer"))
     return render_template('rtsp_input.html', error=None, saved=saved)
 
@@ -160,8 +177,21 @@ def video_viewer():
         return redirect(url_for("login"))
     name = session.get('name')
     link = session.get('link')
+    return render_template("video_viewer.html", name=name, link=link,
+                           stream_url=STREAM_URL, processed_url=PROCESSED_STREAM_URL)
+
+@app.route('/video_viewer2')
+def video_viewer2():
+    print("start html2")
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+    name = session.get('name')
+    link = session.get('link')
+    name2 = session.get('name2')
+    link2 = session.get('link2')
     return render_template("video_viewer2.html", name=name, link=link,
-                           stream_url=STREAM_URL2, processed_url=PROCESSED_STREAM_URL)
+                           stream_url1=STREAM_URL, processed_url=PROCESSED_STREAM_URL,name2=name2, link2=link2,
+                           stream_url2=STREAM_URL2, processed_url2=PROCESSED_STREAM_URL2)
 
 @app.route('/check_status')
 def check_status():
