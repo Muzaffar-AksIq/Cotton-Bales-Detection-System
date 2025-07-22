@@ -1,9 +1,4 @@
 from datetime import datetime
-# shared_state = {
-#     "counter": 0,
-#     "logs": [],
-#     "last_frame": None
-# }
 
 shared_state = {
     "tracked": {},

@@ -65,7 +65,6 @@ def check_video_status():
 
 def update_stats():
     # In your real app, this will use shared_state from yolovision.state
-    print("yyooooooooo", shared_state["counter"])
     return str(shared_state["counter"]), "\n".join(shared_state["logs"][-10:])
 
 def start_backend_if_needed(link):

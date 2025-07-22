@@ -261,7 +261,7 @@ import time
 import gradio as gr
 from config import STREAM_URL2, MODEL_PATH
 from logger import logger
-from yolovision2.streamer import start_flask_server2
+from versions.yolovision2.streamer import start_flask_server2
 from yolovision2.detection import start_yolo_detection2
 from yolovision2.state import shared_state2
 from flask import Flask
