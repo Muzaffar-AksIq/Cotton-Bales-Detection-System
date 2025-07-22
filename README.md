@@ -174,5 +174,5 @@ MIT
 
 ---
 
-Let me know if you'd like me to generate a README file from this or adapt it for a specific platform like GitHub!
+
 ```
